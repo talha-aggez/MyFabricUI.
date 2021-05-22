@@ -11,6 +11,7 @@ import Maps from "@/pages/Maps.vue";
 import Typography from "@/pages/Typography.vue";
 import TableList from "@/pages/TableList.vue";
 import AddProduct from "@/pages/AddProduct.vue";
+import Login from "@/pages/Login.vue";
 
 const routes = [
   {
@@ -62,10 +63,15 @@ const routes = [
         path: "addProduct/:id"
         ,name: "addProduct/:id"
         ,component: AddProduct
-      }
+      },
     ]
   },
   { path: "*", component: NotFound }
+  ,{
+    path: "/login"
+    ,name: "login"
+    ,component: Login
+  },
 ];
 
 /**
