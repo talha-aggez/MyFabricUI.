@@ -12,7 +12,13 @@ import Typography from "@/pages/Typography.vue";
 import TableList from "@/pages/TableList.vue";
 import AddProduct from "@/pages/AddProduct.vue";
 import Login from "@/pages/Login.vue";
-
+import ProductType from "@/pages/ProductType.vue";
+import AddProductType from "@/pages/AddProductType.vue";
+import Operation from "@/pages/Operation.vue";
+import AddOperation from "@/pages/AddOperation.vue";
+import SubProductTree from "@/pages/SubProductTree.vue";
+import AddSubProductTree from "@/pages/AddSubProductTree.vue";
+import CustomerClientPage from "@/pages/CustomerClientPage.vue";
 const routes = [
   {
     path: "/",
@@ -64,6 +70,46 @@ const routes = [
         ,name: "addProduct/:id"
         ,component: AddProduct
       },
+      {
+        path: "addProductType/:id"
+        ,name: "addProductType/:id"
+        ,component: AddProductType
+      },
+      {
+        path: "productType"
+        ,name: "productType"
+        ,component: ProductType
+      },
+      {
+        path: "addProductType"
+        ,name: "addProductType"
+        ,component: AddProductType
+      },
+      {
+        path: "operation"
+        ,name: "operation"
+        ,component: Operation
+      },
+      {
+        path: "addOperation"
+        ,name: "addOperation"
+        ,component: AddOperation
+      },
+      {
+        path: "subProductTree"
+        ,name: "subProductTree"
+        ,component: SubProductTree
+      },
+      {
+        path: "addSubProductTree"
+        ,name: "addSubProductTree"
+        ,component: AddSubProductTree
+      },
+      {
+        path: "addSubProductTree/:id"
+        ,name: "addSubProductTree/:id"
+        ,component: AddSubProductTree
+      },
     ]
   },
   { path: "*", component: NotFound }
@@ -72,6 +118,11 @@ const routes = [
     ,name: "login"
     ,component: Login
   },
+  {
+    path: "/customerClientPage"
+    ,name: "customerClientPage"
+    ,component: CustomerClientPage
+  }
 ];
 
 /**

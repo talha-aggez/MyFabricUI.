@@ -5,11 +5,10 @@
   <div>
     <div class="text-end mb-2">
       <button class="btn btn-success " @click="addProduct()">
-        Ürün Ekle
+        Alt Ürün Ekle
       </button>
     </div>
     <div class="row">
-      <div class="col-12">
         <card :title="table1.title" :subTitle="table1.subTitle">
           <div slot="raw-content" class="table-responsive">
             <table class="table">
@@ -19,8 +18,7 @@
                     {{ column }}
                   </th>
                   <th>Sil</th>
-                  <th>Düzenle</th>
-                  <th>Alt Ürün Ekle</th>
+                  <th>Güncelle</th>
                 </slot>
               </thead>
               <tbody>
@@ -35,7 +33,7 @@
                     </td>
                     <td>
                       <button
-                        @click="removeProduct(item.productId)"
+                        @click="removeProduct(item.id)"
                         class="btn btn-danger"
                       >
                         Sil
@@ -43,18 +41,10 @@
                     </td>
                     <td>
                       <button
-                        @click="updateProduct(item.productId)"
-                        class="btn btn-primary"
+                        @click="updateProduct(item.id)"
+                        class="btn btn-warning"
                       >
                         Güncelle
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        @click="updateProduct(item.productId)"
-                        class="btn btn-primary"
-                      >
-                        Alt Ürün
                       </button>
                     </td>
                   </slot>
@@ -71,9 +61,9 @@
 <script>
 import { PaperTable } from "@/components";
 import axios from "axios";
-const tableColumns = ["productId", "productName", "productTypeName", "isSalable"];
+const tableColumns = ["id", "productName" , "subProductName" ,  "amount"];
 let tableData = [];
-const tableHeaderTitles = ["Id", "Ürün Adı", "Kategori İsmi", "Satılabilir Mi"];
+const tableHeaderTitles = ["Id", "Ürün İsmi" , "Alt Ürün İsmi" , "Miktarı" ];
 
 export default {
   components: {
@@ -82,7 +72,7 @@ export default {
   data() {
     return {
       table1: {
-        title: "ÜRÜNLER",
+        title: "Alt Ürün Listesi",
         subTitle: "",
         columns: [...tableColumns],
         products: [],
@@ -92,36 +82,27 @@ export default {
   },
   created() {
     axios
-      .get("https://localhost:44397/api/products/getProductWithProductType")
+      .get("https://localhost:44397/api/subproducttree/getSubProductTreeWithAll")
       .then(res => {
         console.log(res.data);
         this.table1.products = res.data;
-
-        for (let i = 0; i < this.table1.products.length; i++) {
-          console.log(this.table1.products[i].isSalable);
-          if (this.table1.products[i].isSalable == false) {
-            this.table1.products[i].isSalable = "hayır";
-          } else {
-            this.table1.products[i].isSalable = "evet";
-          }
-        }
         console.log(this.table1.products);
       });
   },
   methods: {
     addProduct() {
-      this.$router.push("/addProduct");
+      this.$router.push("/addSubProductTree");
     },
     removeProduct(id) {
       console.log(id + "solda");
-      axios.delete("https://localhost:44397/api/products/" + id).then(res => {
-        alert(res.data);
+      axios.delete("https://localhost:44397/api/subproducttree/" + id).then(res => {
+      alert(res.data);
        this.$router.go(this.$router.currentRoute)
       });
     },
     updateProduct(id) {
       console.log(id + "solda");
-      this.$router.push(`/addProduct/${id}`);
+      this.$router.push(`/addSubProductTree/${id}`);
     },
     hasValue(item, column) {
       return item[column] !== "undefined";

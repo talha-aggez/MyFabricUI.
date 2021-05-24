@@ -52,13 +52,13 @@ export default {
         });
     },
     async signin() {
-      const response = await axios.post("https://localhost:44397/api/auth/login", this.table.user).then((response)=> {
+      const response = await axios.post("https://localhost:44397/api/auth/signup", this.table.user).then((response)=> {
             localStorage.setItem("accessToken",response.data.token);
             this.$router.push(name="dashboard");       
         })
         .catch((error)=> {
           console.log(error);
-          alert("Kullanıcı adı veya şifre hatalı");
+          alert("Kullanıcı adı kullanılmaktadır");
         });
     }
   }
