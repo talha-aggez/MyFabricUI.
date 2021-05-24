@@ -1,46 +1,7 @@
 <template>
-<div class="super_container">
+<div class="super_container" id="top-div-super">
     <!-- Header -->
     <header class="header">
-        <!-- Top Bar -->
-        <div class="top_bar">
-            <div class="container">
-                <div class="row">
-                    <div class="col d-flex flex-row">
-                        <div class="top_bar_contact_item">
-                            <div class="top_bar_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918577/phone.png" alt=""></div>+91 9823 132 111
-                        </div>
-                        <div class="top_bar_contact_item">
-                            <div class="top_bar_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918597/mail.png" alt=""></div><a href="mailto:fastsales@gmail.com">contact@bbbootstrap.com</a>
-                        </div>
-                        <div class="top_bar_content ml-auto">
-                            <div class="top_bar_menu">
-                                <ul class="standard_dropdown top_bar_dropdown">
-                                    <li> <a href="#">English<i class="fas fa-chevron-down"></i></a>
-                                        <ul>
-                                            <li><a href="#">Italian</a></li>
-                                            <li><a href="#">Spanish</a></li>
-                                            <li><a href="#">Japanese</a></li>
-                                        </ul>
-                                    </li>
-                                    <li> <a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
-                                        <ul>
-                                            <li><a href="#">EUR Euro</a></li>
-                                            <li><a href="#">GBP British Pound</a></li>
-                                            <li><a href="#">JPY Japanese Yen</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="top_bar_user">
-                                <div class="user_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918647/user.svg" alt=""></div>
-                                <div><a href="#">Register</a></div>
-                                <div><a href="#">Sign in</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div> <!-- Header Main -->
         <div class="header_main">
             <div class="container">
@@ -242,7 +203,14 @@
     <div style="height: 700px"> </div>
 </div>
 </template>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+<script>
+//import postscribe from 'postscribe'
+export default {
+  // mounted: function () {
+  //   postscribe('#top-div-super', `<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"><\/script>`)
+  // }
+}
+</script>
 <style>
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900|Rubik:300,400,500,700,900');
