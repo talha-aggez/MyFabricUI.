@@ -14,15 +14,17 @@
     "@popperjs/core": "^2.9.2",
     "@syncfusion/ej2-vue-dropdowns": "^19.1.64",
     "axios": "^0.21.1",
-    "bootstrap": "^5.0.0-beta3",
+    "bootstrap": "^5.0.1",
+    "bootstrap-vue": "^2.21.2",
     "chartist": "^0.11.0",
     "es6-promise": "^4.2.4",
     "postscribe": "^2.0.8",
-    "vue": "^2.6.10",
+    "vue": "^2.6.12",
     "vue-clickaway": "^2.1.0",
     "vue-notifyjs": "^0.3.0",
     "vue-router": "^3.0.1",
-    "vue-simple-search-dropdown": "^1.0.1"
+    "vue-simple-search-dropdown": "^1.0.1",
+    "vue3-datepicker": "^0.2.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.10.0",
