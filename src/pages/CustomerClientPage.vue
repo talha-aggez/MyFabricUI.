@@ -97,7 +97,7 @@
             </div>
             <div class="modal-footer">
               <slot name="footer">
-                 <b-form-datepicker id="example-datepicker" v-model="table1.deadLine" class="mb-2 btn-black" style="color: black;"></b-form-datepicker>
+                 <b-form-datepicker id="example-datepicker" v-model="value" class="mb-2 btn-black" style="color: black;"></b-form-datepicker>
                 <button
                   class="btn btn-outline-primary  ml-4 btn-block text-center d-inline"
                   @click="saveOrder()"
@@ -129,15 +129,16 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue);
 export default {
-  components: { Button },
+  components: { Button,BootstrapVue },
   data() {
     return {
       table1: {
         products: [],
         listBasket: [],
         showModel: false
-        ,deadLine: null
+        ,deadLine: ''
       }
+      ,value : ''
     };
   },
   created() {
@@ -153,9 +154,13 @@ export default {
    data(item){ return item.amount;}
   },
   methods: {
-    saveOrder(){
-      myObj = { "products": this.table1.listBasket, "deadline": this.table1.deadline};
-      
+    async saveOrder(){
+      console.log(this.value);
+      let  myObj = { "OrderItems": this.table1.listBasket, "DeadLine": this.value , "AppUserId" : 1};
+       const response = await axios.post(
+          "https://localhost:44397/api/order",
+          myObj
+        );
       this.table1.showModel = false; console.log(this.table1.deadLine);
     },
     increment(item){
@@ -178,7 +183,7 @@ export default {
           }
       }
       item.amount = 1;
-      item.date = new Date(2018, 11, 24);
+      //item.date = new Date(2018, 11, 24);
       this.table1.listBasket.push(item);
       console.log(this.table1.listBasket);
     },
