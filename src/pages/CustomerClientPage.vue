@@ -30,7 +30,14 @@
           <i style="font-size:25px; margin: right 2.5em;" class="ti-user"> </i>
         </div>
       </a>
-
+      <div class="group" style="margin-right: 1.5%">
+           <i
+          style="font-size:25px; margin: left 2.5em; margin-right: 2.5%; cursor: pointer;"
+          class="ti-view-list-alt"
+          @click="goOrdersPage()"
+        >
+        </i>
+      </div>
       <div class="group" style="margin-right: 2.5%">
         <i
           style="font-size:25px; margin: left 2.5em; margin-right: 2.5%; cursor: pointer;"
@@ -88,8 +95,9 @@
                 >
                 <table class="table table-striped"> 
                   <tr>
-                    <td style="margin-right: 2%;"> {{item.productName}} </td>
-                    <td><input class="text-right" type="number" v-model="item.amount" min="0" style="margin-left: 2%; width:80px; float: right;"></td>
+                    <td style="width:80px"> {{item.productName}} </td>
+                    <td><input type="number" v-model="item.amount" min="0" style="width:80px; float: right;"></td>
+                    <td><button class="btn btn-danger ti-trash"  type="button" @click="removeFromBasketList(item)" style="font-size: 20px;margin-left: 2%; width:80px; float: right; color:red;"></button></td>
                   </tr>
                 </table>
                 </div>
@@ -97,7 +105,8 @@
             </div>
             <div class="modal-footer">
               <slot name="footer">
-                 <b-form-datepicker id="example-datepicker" v-model="value" class="mb-2 btn-black" style="color: black;"></b-form-datepicker>
+                <!-- <span >Termin Tarihi</span> -->
+                <b-form-datepicker id="example-datepicker"  placeholder="Termin Tarihi" v-model="value" class="mb-2 btn-black" style="color: black;"></b-form-datepicker>
                 <button
                   class="btn btn-outline-primary  ml-4 btn-block text-center d-inline"
                   @click="saveOrder()"
@@ -124,12 +133,13 @@ import axios from "axios";
 import Vue from 'vue'
 import Button from "../components/Button.vue";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import moment from 'moment'
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue);
 export default {
-  components: { Button,BootstrapVue },
+  components: { Button,BootstrapVue,moment },
   data() {
     return {
       table1: {
@@ -154,6 +164,23 @@ export default {
    data(item){ return item.amount;}
   },
   methods: {
+    goOrdersPage(){
+      this.$router.push(`/customerOrderList`);
+    }
+    ,
+    removeFromBasketList(item){
+      let templist = [];
+      for(let i = 0 ; i< this.table1.listBasket.length ; i++){
+        if(item.productId != this.table1.listBasket[i].productId)
+          templist.push(this.table1.listBasket[i])
+      }
+      console.log("temp")
+      console.log(templist);
+      this.table1.listBasket = null;
+      this.table1.listBasket = templist;
+      console.log(this.table1.listBasket);
+    }
+    ,
     async saveOrder(){
       console.log(this.value);
       let  myObj = { "OrderItems": this.table1.listBasket, "DeadLine": this.value , "AppUserId" : 1};
@@ -197,7 +224,8 @@ export default {
       // We pass the ID of the button that we want to return focus to
       // when the modal has hidden
       this.$refs["my-modal"].toggle("#toggle-btn");
-    }
+    },
+    
   }
 };
 </script>
