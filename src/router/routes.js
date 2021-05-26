@@ -19,11 +19,12 @@ import AddOperation from "@/pages/AddOperation.vue";
 import SubProductTree from "@/pages/SubProductTree.vue";
 import AddSubProductTree from "@/pages/AddSubProductTree.vue";
 import CustomerClientPage from "@/pages/CustomerClientPage.vue";
+import CustomerOrderList from "@/pages/CustomerOrderList.vue";
 const routes = [
   {
     path: "/",
     component: DashboardLayout,
-    redirect: "/dashboard",
+    redirect: "/login",
     children: [
       {
         path: "dashboard",
@@ -122,6 +123,11 @@ const routes = [
     path: "/customerClientPage"
     ,name: "customerClientPage"
     ,component: CustomerClientPage
+  },
+  {
+    path: "/customerOrderList"
+    ,name: "customerOrderList"
+    ,component: CustomerOrderList
   }
 ];
 
