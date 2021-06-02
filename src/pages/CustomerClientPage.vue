@@ -9,22 +9,15 @@
           src="https://github.com/subeshb1/GrabCheap/blob/master/img/logo_inverse.jpg?raw=true"
           alt="logo"
         />
-        <div class="text">GrabCheap</div>
+        <div style="cursor:pointer;" class="text" @click="homePage()">GrabCheap</div>
       </div>
       <div class="item search right" tabindex="0">
         <div class="search-group">
-          <select>
-            <option value="all">All</option>
-            <option value="all">Mens</option>
-            <option value="all">Womens</option>
-            <option value="all">Winter</option>
-            <option value="all">Summer</option>
-          </select>
-          <input type="text" />
-          <i class="material-icons search-icon ti-search"> </i>
+          <input type="text" v-model="table1.searchWord" @keyup.enter="searchProduct(table1.searchWord)" />
+          <i class="material-icons search-icon ti-search" @click="searchProduct(table1.searchWord)"> </i>
         </div>
       </div>
-
+      <h3 style="text-transform: capitalize;margin-right:2%;">Hoş Geldin {{table1.userName}}</h3>
       <a href="" class="item" style="margin-right: 1%;">
         <div class="group">
           <i style="font-size:25px; margin: right 2.5em;" class="ti-user"> </i>
@@ -38,18 +31,26 @@
         >
         </i>
       </div>
-      <div class="group" style="margin-right: 2.5%">
+      <div class="group position-relative  " style="margin-right: 2.5% ;font-size:20px;">
         <i
           style="font-size:25px; margin: left 2.5em; margin-right: 2.5%; cursor: pointer;"
           class="ti-shopping-cart"
           @click="table1.showModel = true"
         >
         </i>
+         <sub class="badge badge-pill position-absolute text-info" style="bottom:1.450rem !important; left:1.150rem !important;">{{table1.listBasket.length}}</sub>
+      </div>
+      <div class="group" style="margin-right: 2.5%; cursor:pointer; background-color:red; padding:2px;" @click="signOut()">
+        <i
+          style="font-size:25px; margin: left 2.5em; margin-right: 2.5%; cursor: pointer;"
+          class="ti-close"
+        >
+        </i>
       </div>
     </nav>
     <div class="row m-4 ">
       <div
-        class="col-3 mb-4"
+        class="col-2 mb-4"
         v-for="item in table1.products"
         :key="item.productName"
       >
@@ -147,11 +148,15 @@ export default {
         listBasket: [],
         showModel: false
         ,deadLine: ''
+        ,searchWord: null
+        ,userName: null
       }
       ,value : ''
     };
   },
   created() {
+    this.table1.userName = localStorage.userName;
+    console.log(this.table1.userName);
     axios
       .get("https://localhost:44397/api/products/GetProductSalable")
       .then(res => {
@@ -183,7 +188,7 @@ export default {
     ,
     async saveOrder(){
       console.log(this.value);
-      let  myObj = { "OrderItems": this.table1.listBasket, "DeadLine": this.value , "AppUserId" : 1};
+      let  myObj = { "OrderItems": this.table1.listBasket, "DeadLine": this.value , "AppUserId" : localStorage.userID};
        const response = await axios.post(
           "https://localhost:44397/api/order",
           myObj
@@ -225,12 +230,37 @@ export default {
       // when the modal has hidden
       this.$refs["my-modal"].toggle("#toggle-btn");
     },
-    
+    searchProduct(search){
+      axios
+      .get("https://localhost:44397/api/products/searchproducts/" + search)
+      .then(res => {
+        console.log(res.data);
+        this.table1.products = res.data;
+        console.log(this.table1.products);
+      });
+      if(search == ""){
+          axios
+        .get("https://localhost:44397/api/products/GetProductSalable")
+        .then(res => {
+          console.log(res.data);
+          this.table1.products = res.data;
+          console.log(this.table1.products);
+        });
+      }
+    },
+    homePage(){
+     this.$router.go(this.$router.currentRoute)
+    },
+     signOut(){
+      localStorage.clear();
+      this.$router.push(`/login`);
+    }
   }
 };
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
 .datepicker{
   color:black;

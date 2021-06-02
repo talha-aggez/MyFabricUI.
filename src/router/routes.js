@@ -25,6 +25,7 @@ import WorkCenterList from "@/pages/WorkCenterList.vue";
 import AddWorkCenter from "@/pages/AddWorkCenter.vue";
 import WorkCenterOperation from "@/pages/WorkCenterOperation.vue";
 import AddWorkCenterOperation from "@/pages/AddWorkCenterOperation.vue";
+import SiparisYapilandir from "@/pages/SiparisYapilandir.vue";
 const routes = [
   {
     path: "/",
@@ -150,6 +151,11 @@ const routes = [
         path: "addWorkCenterOperation/:id"
         ,name: "addWorkCenterOperation/:id"
         ,component: AddWorkCenterOperation
+      },
+      {
+        path: "siparisYapilandir/:id"
+        ,name: "siparisYapilandir"
+        ,component: SiparisYapilandir
       },
     ]
   },

@@ -20,7 +20,6 @@
                   </th>
                   <th>Sil</th>
                   <th>Düzenle</th>
-                  <th>Alt Ürün Ekle</th>
                 </slot>
               </thead>
               <tbody>
@@ -44,17 +43,9 @@
                     <td>
                       <button
                         @click="updateProduct(item.productId)"
-                        class="btn btn-primary"
+                        class="btn btn-info"
                       >
                         Güncelle
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        @click="updateProduct(item.productId)"
-                        class="btn btn-primary"
-                      >
-                        Alt Ürün
                       </button>
                     </td>
                   </slot>

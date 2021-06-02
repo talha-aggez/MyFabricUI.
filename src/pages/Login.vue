@@ -7,13 +7,13 @@
                     <div class="login-space">
                         <div class="login">
                             <div class="group mt-2"> <label for="user" class="label">Kullanıcı Adı</label> <input id="user" v-model="table.user.name" type="text" class="input" placeholder="Kullanıcı Adı Giriniz" required> </div>
-                            <div class="group"> <label for="pass" class="label">Şifre</label> <input id="pass" type="password"  v-model="table.user.password" class="input" data-type="password" placeholder="Şifre giriniz" required> </div>
+                            <div class="group"> <label for="pass" class="label">Şifre</label> <input id="pass" type="password" @keyup.enter="login()" v-model="table.user.password" class="input" data-type="password" placeholder="Şifre giriniz" required> </div>
                             <div class="group"> <input type="submit" class="button" @click="login()" value="Giriş"> </div>
                             <div class="hr"></div>
                         </div>
                         <div class="sign-up-form">
                             <div class="group"> <label for="user" class="label">Kullanıcı Adı</label> <input id="user" type="text" class="input" v-model="table.user.name" placeholder="Kullanıcı Adı Giriniz" required> </div>
-                            <div class="group"> <label for="pass" class="label">Şifre</label> <input id="pass" type="password" class="input" v-model="table.user.password" data-type="password" placeholder="Şifre giriniz" required> </div>
+                            <div class="group"> <label for="pass" class="label">Şifre</label> <input id="pass" type="password" class="input" @keyup.enter="signin()" v-model="table.user.password" data-type="password" placeholder="Şifre giriniz" required> </div>
                             <div class="group"> <input type="submit" class="button" @click=" signin()" value="Kayıt"> </div>
                             <div class="hr"></div>
                         </div>
@@ -54,6 +54,8 @@ export default {
                     roles.push("User");
                 }
             }
+            localStorage.setItem("userID",response.data.id);
+            localStorage.setItem("userName",response.data.name);
             console.log(roles);
             localStorage.setItem("roles",roles);
             if(roles.includes("User"))
@@ -69,7 +71,10 @@ export default {
     async signin() {
       const response = await axios.post("https://localhost:44397/api/auth/signup", this.table.user).then((response)=> {
             localStorage.setItem("accessToken",response.data.token);
-            this.$router.push(name="dashboard");       
+            localStorage.setItem("userID",response.data.id);
+            localStorage.setItem("userName",response.data.name);
+             localStorage.setItem("roles",roles);
+            this.$router.push(name="customerClientPage");       
         })
         .catch((error)=> {
           console.log(error);

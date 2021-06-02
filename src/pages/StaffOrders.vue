@@ -11,6 +11,7 @@
                     {{ column }}
                   </th>
                   <th>Sipariş Detayı</th>
+                  <th>Siparis Yapilandir</th>
                 </tr>
               </thead>
               <tbody>
@@ -28,8 +29,13 @@
                                 @click="listOrder(item.orderID)"
                                 class="btn btn-danger"
                             >
-                            Sipraiş Detayı
+                            Sipariş Detayı
                       </button>
+                        </td>
+                        <td>
+                          <button @click="getOrderDetails(item.orderID)" class="btn btn-info">
+                              Sipariş Yapılandır
+                          </button>
                         </td>
                     </slot>
                     </tr>
@@ -94,9 +100,9 @@ import moment from 'moment'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue);
-const tableColumns = ["orderID", "orderDate", "deadLine"];
+const tableColumns = ["orderID", "customerName", "orderDate", "deadLine"];
 let tableData = [];
-const tableHeaderTitles = ["Id",  "Sipariş Tarihi", "Bitiş Tarihi"];
+const tableHeaderTitles = ["Id", "Müşteri İsmi", "Sipariş Tarihi", "Bitiş Tarihi"];
 export default {
   components: { Button,BootstrapVue,PaperTable,moment },
   data() {
@@ -158,6 +164,9 @@ export default {
        }
       this.table1.showModel = true;
     },
+    getOrderDetails(id){
+       this.$router.push(`/siparisYapilandir/${id}`);
+    }
   }
 }
 </script>

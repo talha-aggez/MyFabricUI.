@@ -9,22 +9,15 @@
           src="https://github.com/subeshb1/GrabCheap/blob/master/img/logo_inverse.jpg?raw=true"
           alt="logo"
         />
-        <div class="text">GrabCheap</div>
+        <div style="cursor:pointer" class="text" @click="homePage()">GrabCheap</div>
       </div>
       <div class="item search right" tabindex="0">
         <div class="search-group">
-          <select>
-            <option value="all">All</option>
-            <option value="all">Mens</option>
-            <option value="all">Womens</option>
-            <option value="all">Winter</option>
-            <option value="all">Summer</option>
-          </select>
           <input type="text" />
           <i class="material-icons search-icon ti-search"> </i>
         </div>
       </div>
-
+       <h3 style="text-transform: capitalize;margin-right:2%;">Hoş Geldin {{table1.userName}}</h3>
       <a href="" class="item" style="margin-right: 1%;">
         <div class="group">
           <i style="font-size:25px; margin: right 2.5em;" class="ti-user"> </i>
@@ -42,10 +35,17 @@
         <i
           style="font-size:25px; margin: left 2.5em; margin-right: 2.5%; cursor: pointer;"
           class="ti-shopping-cart"
-          @click="table1.showModel = true"
         >
         </i>
       </div>
+      <div class="group" style="margin-right: 2.5%; cursor:pointer; background-color:red; padding:2px;" @click="signOut()">
+        <i
+          style="font-size:25px; margin: left 2.5em; margin-right: 2.5%; cursor: pointer;"
+          class="ti-close"
+        >
+        </i>
+      </div>
+     
     </nav>
      <div class="row">
       <div class="col-12">
@@ -162,8 +162,9 @@ export default {
     };
   },
   created() {
+    this.table1.userName = localStorage.userName;
     axios
-      .get("https://localhost:44397/api/order/getOrdersFromAppUserId/1")
+      .get("https://localhost:44397/api/order/getOrdersFromAppUserId/"+localStorage.userID)
       .then(res => {
         console.log(res.data);
         //this.table1.tempOrderId = res.data
@@ -206,6 +207,13 @@ export default {
        }
       this.table1.showModel = true;
     },
+    homePage(){
+      this.$router.push(`/customerClientPage`);
+    },
+    signOut(){
+      localStorage.clear();
+      this.$router.push(`/login`);
+    }
   }
 }
 </script>
