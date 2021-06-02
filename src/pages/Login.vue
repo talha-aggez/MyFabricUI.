@@ -28,7 +28,6 @@
 <script>
 import axios from "axios";
 export default {
-   
    data(){
        return{
            table: {
@@ -44,7 +43,23 @@ export default {
     async login() {
       const response = await axios.post("https://localhost:44397/api/auth/login", this.table.user).then((response)=> {
             localStorage.setItem("accessToken",response.data.token);
-            this.$router.push(name="dashboard");       
+            let roles = [];
+            console.log(response.data.roles);
+            for(let i = 0 ; i < response.data.roles.length ; i++){
+                 console.log(response.data.roles[i].name);
+                if(response.data.roles[i].name == "Customer"){
+                    roles.push("Customer");
+                }
+                if(response.data.roles[i].name == "User"){
+                    roles.push("User");
+                }
+            }
+            console.log(roles);
+            localStorage.setItem("roles",roles);
+            if(roles.includes("User"))
+                this.$router.push(name="dashboard");
+            else
+                 this.$router.push(name="customerClientPage");   
         })
         .catch((error)=> {
           console.log(error);

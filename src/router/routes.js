@@ -20,6 +20,11 @@ import SubProductTree from "@/pages/SubProductTree.vue";
 import AddSubProductTree from "@/pages/AddSubProductTree.vue";
 import CustomerClientPage from "@/pages/CustomerClientPage.vue";
 import CustomerOrderList from "@/pages/CustomerOrderList.vue";
+import StaffOrders from "@/pages/StaffOrders.vue";
+import WorkCenterList from "@/pages/WorkCenterList.vue";
+import AddWorkCenter from "@/pages/AddWorkCenter.vue";
+import WorkCenterOperation from "@/pages/WorkCenterOperation.vue";
+import AddWorkCenterOperation from "@/pages/AddWorkCenterOperation.vue";
 const routes = [
   {
     path: "/",
@@ -111,6 +116,41 @@ const routes = [
         ,name: "addSubProductTree/:id"
         ,component: AddSubProductTree
       },
+      {
+        path: "staffOrders"
+        ,name: "staffOrders"
+        ,component: StaffOrders
+      },
+      {
+        path: "workCenterList"
+        ,name: "workCenterList"
+        ,component: WorkCenterList
+      },
+      {
+        path: "addWorkCenter/:id"
+        ,name: "addWorkCenter/:id"
+        ,component: AddWorkCenter
+      },
+      {
+        path: "/addWorkCenter"
+        ,name: "addWorkCenter"
+        ,component: AddWorkCenter
+      },
+      {
+        path: "workCenterOperation"
+        ,name: "workCenterOperation"
+        ,component: WorkCenterOperation
+      },
+      {
+        path: "addWorkCenterOperation"
+        ,name: "addWorkCenterOperation"
+        ,component: AddWorkCenterOperation
+      }
+      ,{
+        path: "addWorkCenterOperation/:id"
+        ,name: "addWorkCenterOperation/:id"
+        ,component: AddWorkCenterOperation
+      },
     ]
   },
   { path: "*", component: NotFound }
@@ -128,7 +168,7 @@ const routes = [
     path: "/customerOrderList"
     ,name: "customerOrderList"
     ,component: CustomerOrderList
-  }
+  },
 ];
 
 /**

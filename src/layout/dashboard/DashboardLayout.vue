@@ -8,8 +8,9 @@
         <sidebar-link to="/productType" name="Ürün Türleri" icon="ti-view-list-alt"/>
         <sidebar-link to="/operation" name="Operasyonlar" icon="ti-view-list-alt"/>
         <sidebar-link to="/subProductTree" name="Alt Ürünler" icon="ti-view-list-alt"/>
-        <sidebar-link to="/table-list" name="WorkCenter" icon="ti-view-list-alt"/>
-        <sidebar-link to="/table-list" name="WorkCenterOperation" icon="ti-view-list-alt"/>
+        <sidebar-link to="/workCenterList" name="WorkCenter" icon="ti-view-list-alt"/>
+        <sidebar-link to="/workCenterOperation" name="WorkCenterOperation" icon="ti-view-list-alt"/>
+        <sidebar-link to="/staffOrders" name="Siparişler" icon="ti-view-list-alt"/>
         <sidebar-link to="/typography" name="Typography" icon="ti-text"/>
         <sidebar-link to="/icons" name="Icons" icon="ti-pencil-alt2"/>
         <sidebar-link to="/maps" name="Map" icon="ti-map"/>
