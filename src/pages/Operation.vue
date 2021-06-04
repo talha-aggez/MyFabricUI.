@@ -98,7 +98,7 @@ export default {
     },
     updateProduct(id) {
       console.log(id + "solda");
-      this.$router.push(`/addProductType/${id}`);
+      this.$router.push(`/addOperation/${id}`);
     },
     hasValue(item, column) {
       return item[column] !== "undefined";

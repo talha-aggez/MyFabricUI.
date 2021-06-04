@@ -157,6 +157,11 @@ const routes = [
         ,name: "siparisYapilandir"
         ,component: SiparisYapilandir
       },
+      {
+        path: "addOperation/:id"
+        ,name: "addOperation"
+        ,component: AddOperation
+      }
     ]
   },
   { path: "*", component: NotFound }
