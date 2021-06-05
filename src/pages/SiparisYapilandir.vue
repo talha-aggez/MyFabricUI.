@@ -47,6 +47,9 @@
                       </tr>
                     </tbody>
                   </table>
+                  <button class="btn btn-danger" @click="saveMachines(item.productId)">
+                     Schedule Oluştur.
+                  </button>
                 </div>
               </card>
             </div>
@@ -68,10 +71,12 @@
                 v-for="jobTitle in table1.workCenters"
                 :value="jobTitle.workCenterId"
                 :key="jobTitle.workCenterId"
+                :id="jobTitle.speed"
                 :selected="jobTitle.workCenterId == table1.selectedWorkItem"
                 >{{jobTitle.workCenterName}} &nbsp &nbsp&nbsp&nbsp HIZI : {{jobTitle.speed}}</option
               >
             </select>
+            <p class="text-primary p-3" v-if="table1.showMachine"> Seçili Makina: {{table1.selectedWorkItemName}}</p>
             </div>
             <div class="modal-footer">
 
@@ -126,8 +131,11 @@ export default {
         headerTitles: [...tableHeaderTitles],
         showModel: false,
         selectedWorkItem: "",
+        selectedWorkItemName: "",
         workCenters: [],
-        schedules: []
+        schedules: [],
+        selectedWorkCenterSpeed: "",
+        showMachine: false,
       }
     };
   },
@@ -152,6 +160,23 @@ export default {
       return item[column];
     },
     listMachine(id,miktar) {
+      this.table1.selectedWorkItemName = "";
+      //this.table1.
+       this.table1.selectedWorkItem = "";
+       this.table1.showMachine = false;
+       axios
+      .get(
+        "https://localhost:44397/api/schedules/GetScheduleByOrderIdAndProductId?orderId="+  this.$route.params.id + "&productId="+  id
+      )
+      .then(res => {
+        console.log("test - schedule")
+        console.log(res.data);
+        if(res.data.length != 0){
+             this.table1.selectedWorkItem = res.data[0].workCenterID;
+             this.table1.selectedWorkItemName = res.data[0].workCenter.workCenterName;
+             this.table1.showMachine = true;
+        }
+      });
        this.table1.showModel = true;
        this.table1.miktar = miktar;
        this.table1.order_id = this.$route.params.id;
@@ -164,6 +189,7 @@ export default {
       .then(res => {
         console.log(res.data);
         this.table1.workCenters = res.data;
+        console.log("Workcenters");
         console.log(this.table1.workCenters);
       });
     },
@@ -173,16 +199,32 @@ export default {
         schedule.workCenterID = this.table1.selectedWorkItem;
         schedule.productID = this.table1.urun_id;
         schedule.orderID = this.table1.order_id;
-        const response = await axios.post(
-          "https://localhost:44397/api/schedules",
-          schedule
-        );
+        schedule.speed = Number(this.table1.selectedWorkCenterSpeed);
+        this.table1.schedules.push(schedule);
+        this.table1.showModel = false;
+        // const response = await axios.post(
+        //   "https://localhost:44397/api/schedules",
+        //   schedule
+        // );
     },
      changeJobTitle(event) {
       //this.table1.selectedProductType = event.target.options[event.target.options.selectedIndex].value
       this.table1.selectedWorkItem =
         event.target.options[event.target.options.selectedIndex].value;
+      this.table1.selectedWorkCenterSpeed =   event.target.options[event.target.options.selectedIndex].id;
+      console.log("Seçilen hız: " + this.table1.selectedWorkCenterSpeed);
     //   console.log("selectedProductType" + this.table1.selectedProductType);
+    },
+    async saveMachines(id){
+      console.log(this.table1.schedules[0].ustUrun = id);
+      if(this.table1.schedules.length != 0){
+          const response = await axios.post(
+              "https://localhost:44397/api/schedules/createScheduleByScheduleList",
+            this.table1.schedules
+        );
+        
+        //alert(response.data);
+      }
     },
   }
 };

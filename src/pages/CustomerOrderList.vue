@@ -144,7 +144,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue);
 const tableColumns = ["orderID", "orderDate", "deadLine"];
 let tableData = [];
-const tableHeaderTitles = ["Id",  "Sipariş Tarihi", "Bitiş Tarihi"];
+const tableHeaderTitles = ["Id",  "Sipariş Tarihi", "Sipariş Durumu"];
 export default {
   components: { Button,BootstrapVue,PaperTable,moment },
   data() {
@@ -180,6 +180,21 @@ export default {
           }
         }
         this.table1.orders = res.data;
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today =yyyy + '-' + mm  + '-' +dd ;
+        console.log("bugün tarihi:" + today);
+        console.log("bugün tarihi:" +this.table1.tempOrderId[0].deadLine);
+        for(let i = 0 ; i < this.table1.tempOrderId.length ; i++){
+           if(this.table1.tempOrderId[i].deadLine < today){
+             this.table1.tempOrderId[i].deadLine = "Siparişiniz hazırlandı";
+           }
+           else{
+              this.table1.tempOrderId[i].deadLine = "Siparişiniz hazırlanıyor";
+           }
+        }
         console.log(this.table1.orders);
       });
   },
@@ -188,7 +203,7 @@ export default {
       return item[column] !== "undefined";
     },
     itemValue(item, column) {
-      if(column == "orderDate" || column == "deadLine"){
+      if(column == "orderDate"){
           item[column] = this.format_date(item[column]);
       }
       return item[column];
