@@ -94,7 +94,7 @@ const routes = [
       },
       {
         path: "operation"
-        ,name: "operation"
+        ,name: "Operasyonlar"
         ,component: Operation
       },
       {
@@ -104,7 +104,7 @@ const routes = [
       },
       {
         path: "subProductTree"
-        ,name: "subProductTree"
+        ,name: "Alt Ürünler"
         ,component: SubProductTree
       },
       {
@@ -119,12 +119,12 @@ const routes = [
       },
       {
         path: "staffOrders"
-        ,name: "staffOrders"
+        ,name: "Siparişler"
         ,component: StaffOrders
       },
       {
         path: "workCenterList"
-        ,name: "workCenterList"
+        ,name: "WorkCenter"
         ,component: WorkCenterList
       },
       {
@@ -139,7 +139,7 @@ const routes = [
       },
       {
         path: "workCenterOperation"
-        ,name: "workCenterOperation"
+        ,name: "WorkCenterOperation"
         ,component: WorkCenterOperation
       },
       {

@@ -3,7 +3,6 @@
     <side-bar>
       <template slot="links">
         <sidebar-link to="/dashboard" name="Dashboard" icon="ti-panel"/>
-        <sidebar-link to="/stats" name="User Profile" icon="ti-user"/>
         <sidebar-link to="/table-list" name="Ürünler" icon="ti-view-list-alt"/>
         <sidebar-link to="/productType" name="Ürün Türleri" icon="ti-layout-tab"/>
         <sidebar-link to="/operation" name="Operasyonlar" icon="ti-layout-grid3"/>
@@ -11,10 +10,7 @@
         <sidebar-link to="/workCenterList" name="WorkCenter" icon="ti-flickr"/>
         <sidebar-link to="/workCenterOperation" name="WorkCenterOperation" icon="ti-drupal"/>
         <sidebar-link to="/staffOrders" name="Siparişler" icon="ti-video-camera"/>
-        <sidebar-link to="/typography" name="Typography" icon="ti-text"/>
-        <sidebar-link to="/icons" name="Icons" icon="ti-pencil-alt2"/>
-        <sidebar-link to="/maps" name="Map" icon="ti-map"/>
-        <sidebar-link to="/notifications" name="Notifications" icon="ti-bell"/>
+        <sidebar-link to="/login" name="Çıkış Yap" icon="ti-shift-right"/>
       </template>
       <mobile-menu>
         <li class="nav-item">
@@ -60,6 +56,7 @@ import TopNavbar from "./TopNavbar.vue";
 import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
 import MobileMenu from "./MobileMenu";
+import SidebarLink from '../../components/SidebarPlugin/SidebarLink.vue';
 export default {
   components: {
     TopNavbar,

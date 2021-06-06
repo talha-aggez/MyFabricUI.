@@ -22,6 +22,7 @@
     "postscribe": "^2.0.8",
     "vue": "^2.6.12",
     "vue-clickaway": "^2.1.0",
+    "vue-google-charts": "^0.3.3",
     "vue-notifyjs": "^0.3.0",
     "vue-router": "^3.0.1",
     "vue-simple-search-dropdown": "^1.0.1",

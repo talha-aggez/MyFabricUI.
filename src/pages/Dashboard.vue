@@ -1,19 +1,26 @@
 <template>
   <div>
-
     <!--Stats cards-->
     <div class="row">
-      <div class="col-md-6 col-xl-3" v-for="stats in statsCards" :key="stats.title">
+      <div
+        class="col-md-6 col-xl-4"
+        v-for="stats in statsCards"
+        :key="stats.title"
+      >
         <stats-card>
-          <div class="icon-big text-center" :class="`icon-${stats.type}`" slot="header">
+          <div
+            class="icon-big text-center"
+            :class="`icon-${stats.type}`"
+            slot="header"
+          >
             <i :class="stats.icon"></i>
           </div>
           <div class="numbers" slot="content">
-            <p>{{stats.title}}</p>
-            {{stats.value}}
+            <p>{{ stats.title }}</p>
+            {{ stats.value }}
           </div>
           <div class="stats" slot="footer">
-            <i :class="stats.footerIcon"></i> {{stats.footerText}}
+            <i :class="stats.footerIcon"></i> {{ stats.footerText }}
           </div>
         </stats-card>
       </div>
@@ -21,64 +28,30 @@
 
     <!--Charts-->
     <div class="row">
-
-      <div class="col-12">
-        <chart-card title="Users behavior"
-                    sub-title="24 Hours performance"
-                    :chart-data="usersChart.data"
-                    :chart-options="usersChart.options">
-          <span slot="footer">
-            <i class="ti-reload"></i> Updated 3 minutes ago
-          </span>
-          <div slot="legend">
-            <i class="fa fa-circle text-info"></i> Open
-            <i class="fa fa-circle text-danger"></i> Click
-            <i class="fa fa-circle text-warning"></i> Click Second Time
-          </div>
-        </chart-card>
+      <div class="col-md-6 col-xl-6">
+      <h3>En çok Sipariş Edilen Ürünler</h3>
+      <GChart type="PieChart" :data="chartData" :options="chartOptions" />
       </div>
-
-      <div class="col-md-6 col-12">
-        <chart-card title="Email Statistics"
-                    sub-title="Last campaign performance"
-                    :chart-data="preferencesChart.data"
-                    chart-type="Pie">
-          <span slot="footer">
-            <i class="ti-timer"></i> Campaign set 2 days ago</span>
-          <div slot="legend">
-            <i class="fa fa-circle text-info"></i> Open
-            <i class="fa fa-circle text-danger"></i> Bounce
-            <i class="fa fa-circle text-warning"></i> Unsubscribe
-          </div>
-        </chart-card>
+      <div class="col-md-6 col-xl-6">
+      <h3>En Çok Sipariş Veren Müşteriler</h3>
+      <GChart type="PieChart" :data="chartData2" :options="chartOptions" />
       </div>
-
-      <div class="col-md-6 col-12">
-        <chart-card title="2015 Sales"
-                    sub-title="All products including Taxes"
-                    :chart-data="activityChart.data"
-                    :chart-options="activityChart.options">
-          <span slot="footer">
-            <i class="ti-check"></i> Data information certified
-          </span>
-          <div slot="legend">
-            <i class="fa fa-circle text-info"></i> Tesla Model S
-            <i class="fa fa-circle text-warning"></i> BMW 5 Series
-          </div>
-        </chart-card>
-      </div>
-
     </div>
-
+    <div class="row"></div>
   </div>
 </template>
 <script>
 import { StatsCard, ChartCard } from "@/components/index";
-import Chartist from 'chartist';
+import Chartist from "chartist";
+import Vue from "vue";
+import axios from "axios";
+import { GChart } from "vue-google-charts";
+Vue.use(GChart);
 export default {
   components: {
     StatsCard,
-    ChartCard
+    ChartCard,
+    GChart
   },
   /**
    * Chart data used to render stats, charts. Should be replaced with server data
@@ -89,34 +62,50 @@ export default {
         {
           type: "warning",
           icon: "ti-server",
-          title: "Capacity",
-          value: "105GB",
-          footerText: "Updated now",
-          footerIcon: "ti-reload"
+          title: "Bugunkü Sipariş Sayısı",
+          value: "105GB"
+          // footerText: "Updated now",
+          // footerIcon: "ti-reload"
         },
         {
           type: "success",
           icon: "ti-wallet",
-          title: "Revenue",
-          value: "$1,345",
-          footerText: "Last day",
-          footerIcon: "ti-calendar"
+          title: "Toplam Sipariş Sayısı",
+          value: "$1,345"
+          // footerText: "Last day",
+          // footerIcon: "ti-calendar"
         },
         {
           type: "danger",
           icon: "ti-pulse",
-          title: "Errors",
-          value: "23",
-          footerText: "In the last hour",
-          footerIcon: "ti-timer"
+          title: "Çalışan Makina Sayısı",
+          value: "23"
+          // footerText: "In the last hour",
+          // footerIcon: "ti-timer"
         },
         {
           type: "info",
-          icon: "ti-twitter-alt",
-          title: "Followers",
-          value: "+45",
-          footerText: "Updated now",
-          footerIcon: "ti-reload"
+          icon: "ti-harddrives",
+          title: "Toplam Makina Sayısı",
+          value: "+45"
+          // footerText: "Updated now",
+          // footerIcon: "ti-reload"
+        },
+        {
+          type: "info",
+          icon: "ti-user",
+          title: "Toplam Müşteri Sayısı",
+          value: "+45"
+          // footerText: "Updated now",
+          // footerIcon: "ti-reload"
+        },
+        {
+          type: "info",
+          icon: "ti-gift",
+          title: "Toplam Ürün Sayısı",
+          value: "+45"
+          // footerText: "Updated now",
+          // footerIcon: "ti-reload"
         }
       ],
       usersChart: {
@@ -183,14 +172,112 @@ export default {
       },
       preferencesChart: {
         data: {
-          labels: ["62%", "32%", "6%"],
-          series: [62, 32, 6]
+          labels: [],
+          series: [["Ürünler", "Yüzde"]],
+          products: []
         },
         options: {}
-      }
+      },
+      chartData: [["Year", "Sales"]],
+      chartOptions: {
+        chart: {
+          title: "Company Performance",
+          subtitle: "Sales, Expenses, and Profit: 2017-2020"
+        }
+      },
+      chartData2: [["Name", "Number"]]
     };
+  },
+  // mounted(){
+  //   this.$router.go(this.$router.currentRoute);
+  // }
+  created() {
+    axios
+      .get("https://localhost:44397/api/order/GetTodayOrderCount")
+      .then(res => {
+        console.log(res.data);
+        this.statsCards[0].value = res.data;
+        console.log(this.statsCards[0].value);
+      });
+    axios
+      .get("https://localhost:44397/api/order/GetTotalOrderCount")
+      .then(res => {
+        console.log(res.data);
+        this.statsCards[1].value = res.data;
+        console.log(this.statsCards[1].value);
+      });
+    axios
+      .get(
+        "https://localhost:44397/api/workcenters/GetActiveWorkCenterTotalCount"
+      )
+      .then(res => {
+        console.log(res.data);
+        this.statsCards[2].value = res.data;
+        console.log(this.statsCards[2].value);
+      });
+    //GetWorkCenterTotalCount
+    axios
+      .get("https://localhost:44397/api/workcenters/GetWorkCenterTotalCount")
+      .then(res => {
+        console.log(res.data);
+        this.statsCards[3].value = res.data;
+        console.log(this.statsCards[3].value);
+      });
+    axios
+      .get("https://localhost:44397/api/appuser/GetTotalCustomerCount")
+      .then(res => {
+        console.log(res.data);
+        this.statsCards[4].value = res.data;
+        console.log(this.statsCards[4].value);
+      });
+    axios
+      .get("https://localhost:44397/api/products/GetTotalProductCount")
+      .then(res => {
+        console.log(res.data);
+        this.statsCards[5].value = res.data;
+        console.log(this.statsCards[5].value);
+      });
+    axios
+      .get("https://localhost:44397/api/order/GetMostActive3Product")
+      .then(res => {
+        console.log(res.data);
+        this.preferencesChart.data.products = res.data;
+        console.log(this.preferencesChart.data.products);
+        let toplam = 0;
+        for (let i = 0; i < this.preferencesChart.data.products.length; i++) {
+          toplam += this.preferencesChart.data.products[i].number;
+        }
+        for (let i = 0; i < this.preferencesChart.data.products.length; i++) {
+          this.chartData.push([
+            this.preferencesChart.data.products[i].name,
+            Number(
+              Math.round(
+                (this.preferencesChart.data.products[i].number / toplam) * 100
+              ).toString()
+            )
+          ]);
+        }
+      });
+    axios
+      .get("https://localhost:44397/api/order/GetMostActive3Person")
+      .then(res => {
+        console.log("res data:");
+        console.log(res.data);
+        let toplam = 0;
+        for (let i = 0; i < res.data.length; i++) {
+          toplam += res.data[i].number;
+        }
+        for (let i = 0; i < res.data.length; i++) {
+          this.chartData2.push([
+            res.data[i].name,
+            Number(Math.round((res.data[i].number / toplam) * 100).toString())
+          ]);
+        }
+        console.log("charData2");
+        console.log(this.chartData2);
+      });
+      // this.$router.go(this.$router.currentRoute)
   }
 };
 </script>
-<style>
-</style>
+<style></style>
